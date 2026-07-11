@@ -1,0 +1,14 @@
+---
+import { render, type CollectionEntry } from "astro:content";
+import ContentLayout from "../../layouts/ContentLayout.astro";
+import { canonicalFor, getPublishedCollections } from "../../lib/content";
+export async function getStaticPaths() {
+  const entries = await getPublishedCollections();
+  return entries.map((entry) => ({ params: { id: entry.id }, props: { entry } }));
+}
+const { entry } = Astro.props as { entry: CollectionEntry<"collectionsArchive"> };
+const { Content } = await render(entry);
+---
+<ContentLayout title={entry.data.title} description={entry.data.description} publishedTime={entry.data.publishedAt} modifiedTime={entry.data.updatedAt} collectionLabel="收藏档案" backHref="/collections/" backLabel="收藏" canonical={canonicalFor(`/collections/${entry.id}/`)} metadata={[{ label: "收录", value: `${entry.data.itemCount} 条` }]} tags={entry.data.tags}>
+  <Content />
+</ContentLayout>

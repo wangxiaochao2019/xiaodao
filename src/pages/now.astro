@@ -1,0 +1,39 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { canonicalFor } from "../lib/content";
+---
+
+<BaseLayout title="现在（Now）" description="晓刀当前正在研究、阅读、观察、创作和实验的事情。" canonical={canonicalFor("/now/")}>
+  <article class="now-page page-shell">
+    <header>
+      <p class="kicker">当前状态</p>
+      <h1>现在（Now）</h1>
+      <p class="lead">这里记录我此刻真正投入注意力的事情。它不是任务清单，也不是完成证明，只是一张会持续更新的近况快照。</p>
+      <p class="updated">更新于 2026 年 7 月 11 日</p>
+    </header>
+    <div class="prose">
+      <h2>正在研究</h2>
+      <p>继续搭建 Investor OS，把市场信息整理成可验证、可复盘的长期研究系统；同时研究 AI Agent 在真实工作中的边界、记忆、协作与验收方式。</p>
+      <h2>正在阅读</h2>
+      <p>围绕长期投资、系统思维、个人知识管理与创作方法进行主题阅读。重点不是增加书目数量，而是把真正改变判断的内容带回正在推进的项目。</p>
+      <h2>正在投资观察</h2>
+      <p>通过 Investor OS 观察产业变化、企业经营与市场信号。坚持区分事实、推断和动作建议；没有可靠数据时保持空白，不把每日波动误当成长周期结论。</p>
+      <h2>正在创作</h2>
+      <p>维护这个个人网站，持续补充公开项目、文章和收藏；同时推进绘本项目，把故事、角色、页面节奏与人工审核流程逐步沉淀下来。</p>
+      <h2>正在实验</h2>
+      <p>在 OpenClaw、Codex 与 ChatGPT 之间测试轻量的 AI 协作方式，也在建设个人知识库。目标不是堆叠工具，而是找到普通人能够长期维护的学习与创作系统。</p>
+      <h2>长期学习计划</h2>
+      <p>保持少量、持续、可回顾的学习主题：投资研究、AI Agent、写作与视觉叙事。每一次学习都尽量留下笔记、作品或方法，让下一次能够从已有基础继续。</p>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .now-page { padding-block: clamp(4rem, 10vw, 8rem); }
+  header { max-width: var(--content-width); margin-bottom: 4rem; }
+  .kicker, .updated { color: var(--color-text-muted); font-size: .82rem; }
+  .kicker { letter-spacing: .1em; }
+  h1 { margin-block: 1rem 1.25rem; font-family: var(--font-serif); font-size: clamp(2.6rem, 6vw, 5rem); }
+  .lead { color: var(--color-text-muted); font-size: 1.12rem; }
+  .updated { margin-top: 1.75rem; }
+</style>

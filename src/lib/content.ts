@@ -1,7 +1,7 @@
 import { getCollection, type CollectionEntry } from "astro:content";
 import { site } from "../config/site";
 
-type CollectionName = "works" | "writing" | "experiments";
+type CollectionName = "works" | "writing" | "experiments" | "projects" | "collectionsArchive";
 type PublicEntry<C extends CollectionName> = CollectionEntry<C>;
 
 function compareEntries<C extends CollectionName>(a: PublicEntry<C>, b: PublicEntry<C>) {
@@ -17,6 +17,8 @@ async function getPublished<C extends CollectionName>(collection: C) {
 export const getPublishedWorks = () => getPublished("works");
 export const getPublishedWriting = () => getPublished("writing");
 export const getPublishedExperiments = () => getPublished("experiments");
+export const getPublishedProjects = () => getPublished("projects");
+export const getPublishedCollections = () => getPublished("collectionsArchive");
 
 export function selectFeatured<T extends { data: { featured: boolean } }>(entries: T[], limit = 3): T[] {
   return [...entries.filter(({ data }) => data.featured), ...entries.filter(({ data }) => !data.featured)].slice(0, limit);

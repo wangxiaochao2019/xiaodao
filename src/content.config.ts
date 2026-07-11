@@ -44,4 +44,24 @@ const experiments = defineCollection({
   }),
 });
 
-export const collections = { works, writing, experiments };
+const projects = defineCollection({
+  loader: glob({ base: "./src/content/projects", pattern: "**/*.{md,mdx}" }),
+  schema: z.object({
+    ...commonFields,
+    type: z.enum(["写作", "绘本", "漫画", "工具", "研究", "实验作品", "其他"]),
+    status: z.enum(["进行中", "已完成", "长期维护", "已归档"]),
+    year: z.number().int(),
+    externalUrl: z.url().optional(),
+    repositoryUrl: z.url().optional(),
+  }),
+});
+
+const collectionsArchive = defineCollection({
+  loader: glob({ base: "./src/content/collections", pattern: "**/*.{md,mdx}" }),
+  schema: z.object({
+    ...commonFields,
+    itemCount: z.number().int().nonnegative().default(0),
+  }),
+});
+
+export const collections = { works, writing, experiments, projects, collectionsArchive };

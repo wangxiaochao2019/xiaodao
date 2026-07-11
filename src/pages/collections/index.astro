@@ -1,0 +1,7 @@
+---
+import ArchivePage from "../../components/ArchivePage.astro";
+import { canonicalFor, getPublishedCollections } from "../../lib/content";
+const entries = await getPublishedCollections();
+const items = entries.map((entry) => ({ title: entry.data.title, description: entry.data.description, publishedAt: entry.data.publishedAt, href: `/collections/${entry.id}/`, label: `${entry.data.itemCount} 条`, tags: entry.data.tags }));
+---
+<ArchivePage title="收藏" description="长期追加的文章、工具、视频、观点与数据索引。" canonical={canonicalFor("/collections/")} items={items} />

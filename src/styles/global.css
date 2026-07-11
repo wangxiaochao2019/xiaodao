@@ -38,16 +38,6 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-body::before {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  background-image: linear-gradient(rgba(45, 42, 36, 0.025) 1px, transparent 1px);
-  background-size: 100% 2rem;
-  content: "";
-  pointer-events: none;
-}
-
 h1,
 h2,
 h3,

@@ -2,11 +2,11 @@
 import { site } from "../config/site";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import ContentCard from "../components/ContentCard.astro";
-import { getPublishedExperiments, getPublishedWorks, getPublishedWriting, selectFeatured } from "../lib/content";
+import { getPublishedCollections, getPublishedProjects, getPublishedWriting, selectFeatured } from "../lib/content";
 
-const works = selectFeatured(await getPublishedWorks(), 2);
+const projects = selectFeatured(await getPublishedProjects(), 3);
 const writing = (await getPublishedWriting()).slice(0, 3);
-const experiments = (await getPublishedExperiments()).slice(0, 3);
+const collections = (await getPublishedCollections()).slice(0, 1);
 ---
 
 <BaseLayout>
@@ -24,39 +24,39 @@ const experiments = (await getPublishedExperiments()).slice(0, 3);
     <p class="lead">用来保存作品、记录思考、追踪长期实验，也持续向世界发出信号。这里不急于给出完整答案，只认真留下那些真实发生的过程。</p>
   </section>
 
-  <section class="archive-section page-shell section-rule" aria-labelledby="works-title">
+  <section class="archive-section page-shell section-rule" aria-labelledby="projects-title">
     <div class="section-heading">
       <p class="section-index" aria-hidden="true">01</p>
-      <h2 id="works-title">进行中的项目</h2>
-      <p>正在持续建设的长期项目。</p>
+      <h2 id="projects-title">正在进行</h2>
+      <p>最近更新的长期项目。</p>
     </div>
-    <div class="card-grid card-grid-three">{works.length ? works.map(({ id, data }) => <ContentCard headingLevel="h3" title={data.title} description={data.description} publishedAt={data.publishedAt} href={`/works/${id}/`} label={data.type} status={data.status} tags={data.tags} />) : <p class="empty">内容正在整理中。</p>}</div>
+    <div class="card-grid card-grid-three">{projects.length ? projects.map(({ id, data }) => <ContentCard headingLevel="h3" title={data.title} description={data.description} publishedAt={data.publishedAt} href={`/projects/${id}/`} label={data.type} status={data.status} tags={data.tags} />) : <p class="empty">内容正在整理中。</p>}</div>
   </section>
 
   <section class="archive-section page-shell section-rule" aria-labelledby="thoughts-title">
     <div class="section-heading">
       <p class="section-index" aria-hidden="true">02</p>
-      <h2 id="thoughts-title">最新文章</h2>
+      <h2 id="thoughts-title">最近思考</h2>
       <p>最近发布的正式写作。</p>
     </div>
     <div class="card-grid card-grid-three">{writing.length ? writing.map(({ id, data }) => <ContentCard headingLevel="h3" title={data.title} description={data.description} publishedAt={data.publishedAt} href={`/writing/${id}/`} label={data.category} tags={data.tags} />) : <p class="empty">内容正在整理中。</p>}</div>
   </section>
 
-  <section class="archive-section page-shell section-rule" aria-labelledby="experiments-title">
+  <section class="archive-section page-shell section-rule" aria-labelledby="collections-title">
     <div class="section-heading">
       <p class="section-index" aria-hidden="true">03</p>
-      <h2 id="experiments-title">当前实验</h2>
-      <p>正在时间里反复实践、学习与记录。</p>
+      <h2 id="collections-title">最近收藏</h2>
+      <p>近期值得留下、以后还会回看的内容。</p>
     </div>
-    <div class="card-grid card-grid-three">{experiments.length ? experiments.map(({ id, data }) => <ContentCard headingLevel="h3" title={data.title} description={data.description} publishedAt={data.publishedAt} href={`/experiments/${id}/`} label={data.cadence} status={data.status} tags={data.tags} />) : <p class="empty">内容正在整理中。</p>}</div>
+    <div class="card-grid">{collections.length ? collections.map(({ id, data }) => <ContentCard headingLevel="h3" title={data.title} description={data.description} publishedAt={data.publishedAt} href={`/collections/${id}/`} label={`${data.itemCount} 条`} tags={data.tags} />) : <p class="empty">内容正在整理中。</p>}</div>
   </section>
 
-  <section class="about page-shell section-rule" aria-labelledby="about-title">
+  <section class="about page-shell section-rule" aria-labelledby="status-title">
     <div class="section-heading">
       <p class="section-index" aria-hidden="true">04</p>
-      <h2 id="about-title">关于</h2>
+      <h2 id="status-title">当前状态</h2>
     </div>
-    <p>{site.about}</p>
+    <p>我正在研究 Investor OS 与 AI Agent，推进个人网站和绘本项目，也持续实验 OpenClaw 与个人知识库。<br /><a href="/now/">查看现在正在做什么 →</a></p>
   </section>
 
   <section class="closing page-shell" aria-label="结束语">
