@@ -26,7 +26,7 @@ export const site = {
   defaultDescription: "晓刀的作品、思考与长期实验。",
   defaultOgImage: null,
   // 部署前替换为最终确认的 workers.dev 地址。
-  siteUrl: "https://example.com",
+  siteUrl: "https://xiaodao.xiaodao-site.workers.dev",
   locale: "zh_CN",
   rss: {
     title: "晓刀｜作品、思考与长期实验",
