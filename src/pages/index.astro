@@ -2,11 +2,17 @@
 import { site } from "../config/site";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import ContentCard from "../components/ContentCard.astro";
-import { getPublishedCollections, getPublishedProjects, getPublishedWriting, selectFeatured } from "../lib/content";
+import { getPublishedCollections, getPublishedExperiments, getPublishedProjects, getPublishedWorks, getPublishedWriting, selectFeatured } from "../lib/content";
 
 const projects = selectFeatured(await getPublishedProjects(), 3);
 const writing = (await getPublishedWriting()).slice(0, 3);
 const collections = (await getPublishedCollections()).slice(0, 1);
+const recentUpdates = [
+  ...(await getPublishedWorks()).map(({ id, data }) => ({ id, title: data.title, description: data.description, publishedAt: data.publishedAt, href: `/works/${id}/`, label: "作品", tags: data.tags })),
+  ...(await getPublishedWriting()).map(({ id, data }) => ({ id, title: data.title, description: data.description, publishedAt: data.publishedAt, href: `/writing/${id}/`, label: "思考", tags: data.tags })),
+  ...(await getPublishedExperiments()).map(({ id, data }) => ({ id, title: data.title, description: data.description, publishedAt: data.publishedAt, href: `/experiments/${id}/`, label: "实验", tags: data.tags })),
+  ...(await getPublishedCollections()).map(({ id, data }) => ({ id, title: data.title, description: data.description, publishedAt: data.publishedAt, href: `/collections/${id}/`, label: "收藏", tags: data.tags })),
+].sort((a, b) => b.publishedAt.getTime() - a.publishedAt.getTime() || a.label.localeCompare(b.label, "zh-CN") || a.id.localeCompare(b.id, "en")).slice(0, 5);
 ---
 
 <BaseLayout>
@@ -51,9 +57,18 @@ const collections = (await getPublishedCollections()).slice(0, 1);
     <div class="card-grid">{collections.length ? collections.map(({ id, data }) => <ContentCard headingLevel="h3" title={data.title} description={data.description} publishedAt={data.publishedAt} href={`/collections/${id}/`} label={`${data.itemCount} 条`} tags={data.tags} />) : <p class="empty">内容正在整理中。</p>}</div>
   </section>
 
-  <section class="about page-shell section-rule" aria-labelledby="status-title">
+  <section class="archive-section page-shell section-rule" aria-labelledby="updates-title">
     <div class="section-heading">
       <p class="section-index" aria-hidden="true">04</p>
+      <h2 id="updates-title">最近更新</h2>
+      <p>作品、思考、实验与收藏的最近五条公开记录。</p>
+    </div>
+    <div class="card-grid">{recentUpdates.length ? recentUpdates.map((entry) => <ContentCard headingLevel="h3" title={entry.title} description={entry.description} publishedAt={entry.publishedAt} href={entry.href} label={entry.label} tags={entry.tags} />) : <p class="empty">内容正在整理中。</p>}</div>
+  </section>
+
+  <section class="about page-shell section-rule" aria-labelledby="status-title">
+    <div class="section-heading">
+      <p class="section-index" aria-hidden="true">05</p>
       <h2 id="status-title">当前状态</h2>
     </div>
     <p>我正在研究 Investor OS 与 AI Agent，推进个人网站和绘本项目，也持续实验 OpenClaw 与个人知识库。<br /><a href="/now/">查看现在正在做什么 →</a></p>
