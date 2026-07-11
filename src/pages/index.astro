@@ -1,22 +1,292 @@
 ---
 import { site } from "../config/site";
-import "../styles/global.css";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const workPlaceholders = [
+  { type: "作品档案", title: "第一个作品条目", summary: "用于整理作品背景、过程与阶段记录的结构示例。", status: "档案建设中" },
+  { type: "创作记录", title: "持续创作条目", summary: "用于保存仍在生长的创作过程，不预设最终成果。", status: "持续更新" },
+  { type: "待整理", title: "未来作品位置", summary: "等待真实内容确认后再建立正式档案。", status: "即将整理" },
+];
+
+const thoughtPlaceholders = [
+  { title: "一则尚未展开的思考", summary: "保留一个清晰入口，等待观点形成后再写成完整文章。", date: "日期待定" },
+  { title: "一份过程中的观察", summary: "记录问题与判断的轮廓，不把占位文字当作正式内容。", date: "日期待定" },
+];
+
+const experimentPlaceholders = [
+  { title: "长期项目记录", summary: "追踪一个项目如何在时间中逐步变化。", status: "持续记录" },
+  { title: "学习系统实验", summary: "保存方法、反馈与调整，而非展示虚构结果。", status: "档案建设中" },
+  { title: "创作过程观察", summary: "关注作品如何从想法变为可见的东西。", status: "持续更新" },
+];
 ---
 
-<!doctype html>
-<html lang="zh-CN">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="description" content={site.defaultDescription} />
-    <title>{site.siteTitle}</title>
-  </head>
-  <body>
-    <main>
-      <h1>{site.siteTitle}</h1>
-      <p class="hero">{site.hero}</p>
-      <p>{site.heroSignature}</p>
-      <p>{site.slogan}</p>
-    </main>
-  </body>
-</html>
+<BaseLayout>
+  <section class="hero page-shell" aria-labelledby="hero-title">
+    <p class="eyebrow">作品 · 思考 · 长期实验</p>
+    <h1 id="hero-title">{site.hero}</h1>
+    <p class="signature">{site.heroSignature}</p>
+  </section>
+
+  <section class="introduction page-shell section-rule" aria-labelledby="intro-title">
+    <p class="section-index" aria-hidden="true">00</p>
+    <div class="section-heading">
+      <h2 id="intro-title">这是一个持续生长的档案。</h2>
+    </div>
+    <p class="lead">用来保存作品、记录思考、追踪长期实验，也持续向世界发出信号。这里不急于给出完整答案，只认真留下那些真实发生的过程。</p>
+  </section>
+
+  <section class="archive-section page-shell section-rule" aria-labelledby="works-title">
+    <div class="section-heading">
+      <p class="section-index" aria-hidden="true">01</p>
+      <h2 id="works-title">作品</h2>
+      <p>正在形成的作品档案。</p>
+    </div>
+    <div class="card-grid card-grid-three">
+      {workPlaceholders.map((item) => (
+        <article class="archive-card">
+          <p class="meta">{item.type}</p>
+          <h3>{item.title}</h3>
+          <p>{item.summary}</p>
+          <p class="status">{item.status}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="archive-section page-shell section-rule" aria-labelledby="thoughts-title">
+    <div class="section-heading">
+      <p class="section-index" aria-hidden="true">02</p>
+      <h2 id="thoughts-title">最近的思考</h2>
+      <p>等待被认真写下的观察与判断。</p>
+    </div>
+    <div class="thought-list">
+      {thoughtPlaceholders.map((item) => (
+        <article>
+          <p class="meta">{item.date} · 静态占位</p>
+          <h3>{item.title}</h3>
+          <p>{item.summary}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="archive-section page-shell section-rule" aria-labelledby="experiments-title">
+    <div class="section-heading">
+      <p class="section-index" aria-hidden="true">03</p>
+      <h2 id="experiments-title">长期实验</h2>
+      <p>在时间里反复实践、学习与记录。</p>
+    </div>
+    <div class="card-grid card-grid-three">
+      {experimentPlaceholders.map((item) => (
+        <article class="archive-card">
+          <p class="meta">结构示例</p>
+          <h3>{item.title}</h3>
+          <p>{item.summary}</p>
+          <p class="status">{item.status}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="about page-shell section-rule" aria-labelledby="about-title">
+    <div class="section-heading">
+      <p class="section-index" aria-hidden="true">04</p>
+      <h2 id="about-title">关于</h2>
+    </div>
+    <p>{site.about}</p>
+  </section>
+
+  <section class="closing page-shell" aria-label="结束语">
+    <p>{site.slogan}</p>
+    <p>持续记录，持续创作，持续向世界发出微弱但真实的信号。</p>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    min-height: clamp(32rem, 72vh, 48rem);
+    padding-block: clamp(6rem, 13vw, 11rem) 5rem;
+  }
+
+  .eyebrow,
+  .meta,
+  .status,
+  .section-index {
+    color: var(--color-text-muted);
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+  }
+
+  .eyebrow {
+    margin-bottom: 2.5rem;
+  }
+
+  h1 {
+    max-width: 14em;
+    margin-bottom: 2.5rem;
+    font-family: var(--font-serif);
+    font-size: clamp(2.5rem, 6.4vw, 5.75rem);
+    font-weight: 600;
+    letter-spacing: -0.04em;
+    white-space: pre-line;
+  }
+
+  .signature {
+    margin-left: min(48%, 28rem);
+    color: var(--color-text-muted);
+  }
+
+  .section-rule {
+    display: grid;
+    grid-template-columns: minmax(9rem, 0.75fr) minmax(0, 2.25fr);
+    gap: 2rem 4rem;
+    padding-block: var(--space-section);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .introduction .section-index {
+    grid-row: 1 / 3;
+  }
+
+  .lead,
+  .about > p {
+    max-width: var(--content-width);
+    font-family: var(--font-serif);
+    font-size: clamp(1.35rem, 2vw, 1.85rem);
+    line-height: 1.75;
+  }
+
+  .section-heading h2 {
+    margin-bottom: 0.6rem;
+    font-family: var(--font-serif);
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+  }
+
+  .section-heading > p:last-child {
+    margin-bottom: 0;
+    color: var(--color-text-muted);
+  }
+
+  .archive-section .section-heading,
+  .about .section-heading {
+    grid-column: 1;
+  }
+
+  .card-grid,
+  .thought-list {
+    grid-column: 2;
+  }
+
+  .card-grid {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .card-grid-three {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .archive-card {
+    display: flex;
+    min-height: 18rem;
+    flex-direction: column;
+    padding: 1.5rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-small);
+    background: color-mix(in srgb, var(--color-surface) 68%, transparent);
+  }
+
+  .archive-card h3,
+  .thought-list h3 {
+    margin-bottom: 0.75rem;
+    font-size: 1.18rem;
+  }
+
+  .archive-card > p:not(.meta, .status),
+  .thought-list article > p:last-child {
+    color: var(--color-text-muted);
+  }
+
+  .status {
+    margin-block: auto 0;
+    padding-top: 2rem;
+    color: var(--color-accent);
+  }
+
+  .thought-list article {
+    padding-block: 1.5rem 2rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .thought-list article:first-child {
+    padding-top: 0;
+    border-top: 0;
+  }
+
+  .about > p {
+    grid-column: 2;
+    white-space: pre-line;
+  }
+
+  .closing {
+    padding-block: clamp(5rem, 12vw, 10rem);
+    text-align: center;
+  }
+
+  .closing p:first-child {
+    font-family: var(--font-serif);
+    font-size: clamp(1.6rem, 3vw, 2.6rem);
+  }
+
+  .closing p:last-child {
+    margin-bottom: 0;
+    color: var(--color-text-muted);
+  }
+
+  @media (max-width: 58rem) {
+    .section-rule {
+      grid-template-columns: 1fr;
+    }
+
+    .introduction .section-index {
+      grid-row: auto;
+    }
+
+    .archive-section .section-heading,
+    .about .section-heading,
+    .card-grid,
+    .thought-list,
+    .about > p {
+      grid-column: 1;
+    }
+
+    .card-grid-three {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 40rem) {
+    .hero {
+      min-height: 30rem;
+      padding-block: 5rem 4rem;
+    }
+
+    h1 {
+      font-size: clamp(2.25rem, 11vw, 3.5rem);
+      letter-spacing: -0.025em;
+    }
+
+    .signature {
+      margin-left: 0;
+      text-align: right;
+    }
+
+    .card-grid-three {
+      grid-template-columns: 1fr;
+    }
+
+    .archive-card {
+      min-height: 15rem;
+    }
+  }
+</style>

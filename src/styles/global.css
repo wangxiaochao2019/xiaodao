@@ -1,43 +1,114 @@
+:root {
+  --color-bg: #f4f1e9;
+  --color-surface: #faf8f2;
+  --color-text: #20201e;
+  --color-text-muted: #67645e;
+  --color-border: #cbc5b8;
+  --color-accent: #8a4b32;
+  --font-sans: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui,
+    -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-serif: "Songti SC", "STSong", "SimSun", serif;
+  --content-width: 44rem;
+  --wide-width: 72rem;
+  --page-padding: clamp(1.25rem, 4vw, 3rem);
+  --radius-small: 0.2rem;
+  --space-section: clamp(4.5rem, 9vw, 8rem);
+}
+
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
 
-body {
-  margin: 0;
-  color: #242424;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  line-height: 1.7;
+html {
+  color-scheme: light;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
-main {
-  width: min(100% - 3rem, 48rem);
-  margin-inline: auto;
-  padding-block: 6rem;
+body {
+  min-width: 20rem;
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-size: clamp(1rem, 0.97rem + 0.15vw, 1.0625rem);
+  line-height: 1.8;
+  text-rendering: optimizeLegibility;
+}
+
+body::before {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-image: linear-gradient(rgba(45, 42, 36, 0.025) 1px, transparent 1px);
+  background-size: 100% 2rem;
+  content: "";
+  pointer-events: none;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin-block-start: 0;
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.35;
+  text-wrap: balance;
 }
 
 a {
   color: inherit;
-  text-underline-offset: 0.2em;
+  text-decoration-color: var(--color-accent);
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.25em;
 }
 
 a:hover {
-  text-decoration-thickness: 0.12em;
+  color: var(--color-accent);
+  text-decoration-thickness: 0.13em;
 }
 
 a:focus-visible {
-  outline: 0.2rem solid currentColor;
-  outline-offset: 0.2rem;
+  border-radius: var(--radius-small);
+  outline: 0.18rem solid var(--color-accent);
+  outline-offset: 0.25rem;
 }
 
-.hero {
-  white-space: pre-line;
+.page-shell {
+  width: min(100% - (var(--page-padding) * 2), var(--wide-width));
+  margin-inline: auto;
 }
 
-@media (max-width: 40rem) {
-  main {
-    width: min(100% - 2rem, 48rem);
-    padding-block: 3rem;
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 10;
+  padding: 0.65rem 0.9rem;
+  transform: translateY(-160%);
+  background: var(--color-text);
+  color: var(--color-surface);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
   }
 }

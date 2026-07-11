@@ -1,0 +1,42 @@
+---
+import { site } from "../config/site";
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="page-shell footer-inner">
+    <p><strong>{site.author}</strong><span>作品、思考与长期实验</span></p>
+    <p class="year">© {currentYear}</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--color-border);
+    color: var(--color-text-muted);
+  }
+
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem 2rem;
+    padding-block: 2.5rem;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  strong {
+    margin-right: 1rem;
+    color: var(--color-text);
+    font-family: var(--font-serif);
+  }
+
+  @media (max-width: 32rem) {
+    .footer-inner {
+      flex-direction: column;
+    }
+  }
+</style>
