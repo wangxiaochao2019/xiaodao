@@ -1,0 +1,7 @@
+---
+import ArchivePage from "../../components/ArchivePage.astro";
+import { canonicalFor, getPublishedWorks } from "../../lib/content";
+const entries = await getPublishedWorks();
+const items = entries.map((entry) => ({ title: entry.data.title, description: entry.data.description, publishedAt: entry.data.publishedAt, href: `/works/${entry.id}/`, label: entry.data.type, status: entry.data.status, tags: entry.data.tags }));
+---
+<ArchivePage title="作品" description="保存已经完成、正在进行和长期维护的创作。" canonical={canonicalFor("/works/")} items={items} />

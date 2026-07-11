@@ -1,0 +1,7 @@
+---
+import ArchivePage from "../../components/ArchivePage.astro";
+import { canonicalFor, getPublishedExperiments } from "../../lib/content";
+const entries = await getPublishedExperiments();
+const items = entries.map((entry) => ({ title: entry.data.title, description: entry.data.description, publishedAt: entry.data.publishedAt, href: `/experiments/${entry.id}/`, label: entry.data.cadence, status: entry.data.status, tags: entry.data.tags }));
+---
+<ArchivePage title="长期实验" description="记录需要长期投入、反复修正和持续观察的项目。" canonical={canonicalFor("/experiments/")} items={items} />

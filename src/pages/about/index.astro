@@ -1,0 +1,16 @@
+---
+import { site } from "../../config/site";
+import { canonicalFor } from "../../lib/content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+---
+<BaseLayout title="关于" description={site.defaultDescription} canonical={canonicalFor("/about/")}>
+  <article class="about-page page-shell">
+    <p class="eyebrow">关于</p><h1>晓刀</h1><p>{site.about}</p>
+  </article>
+</BaseLayout>
+<style>
+  .about-page { min-height: 60vh; padding-block: clamp(5rem, 12vw, 10rem); }
+  .eyebrow { color: var(--color-text-muted); font-size: .78rem; letter-spacing: .12em; }
+  h1 { margin-block: 1.5rem 2rem; font-family: var(--font-serif); font-size: clamp(2.6rem, 6vw, 5rem); }
+  .about-page > p:last-child { max-width: var(--content-width); font-family: var(--font-serif); font-size: clamp(1.3rem, 2.2vw, 1.8rem); line-height: 1.8; white-space: pre-line; }
+</style>

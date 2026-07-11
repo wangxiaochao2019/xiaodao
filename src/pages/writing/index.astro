@@ -1,0 +1,7 @@
+---
+import ArchivePage from "../../components/ArchivePage.astro";
+import { canonicalFor, getPublishedWriting } from "../../lib/content";
+const entries = await getPublishedWriting();
+const items = entries.map((entry) => ({ title: entry.data.title, description: entry.data.description, publishedAt: entry.data.publishedAt, href: `/writing/${entry.id}/`, label: entry.data.series ? `${entry.data.category} · ${entry.data.series}` : entry.data.category, tags: entry.data.tags }));
+---
+<ArchivePage title="思考" description="记录尚未完全成形、但值得留下的判断与观察。" canonical={canonicalFor("/writing/")} items={items} />

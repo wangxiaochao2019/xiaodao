@@ -1,23 +1,12 @@
 ---
 import { site } from "../config/site";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import ContentCard from "../components/ContentCard.astro";
+import { getPublishedExperiments, getPublishedWorks, getPublishedWriting, selectFeatured } from "../lib/content";
 
-const workPlaceholders = [
-  { type: "作品档案", title: "第一个作品条目", summary: "用于整理作品背景、过程与阶段记录的结构示例。", status: "档案建设中" },
-  { type: "创作记录", title: "持续创作条目", summary: "用于保存仍在生长的创作过程，不预设最终成果。", status: "持续更新" },
-  { type: "待整理", title: "未来作品位置", summary: "等待真实内容确认后再建立正式档案。", status: "即将整理" },
-];
-
-const thoughtPlaceholders = [
-  { title: "一则尚未展开的思考", summary: "保留一个清晰入口，等待观点形成后再写成完整文章。", date: "日期待定" },
-  { title: "一份过程中的观察", summary: "记录问题与判断的轮廓，不把占位文字当作正式内容。", date: "日期待定" },
-];
-
-const experimentPlaceholders = [
-  { title: "长期项目记录", summary: "追踪一个项目如何在时间中逐步变化。", status: "持续记录" },
-  { title: "学习系统实验", summary: "保存方法、反馈与调整，而非展示虚构结果。", status: "档案建设中" },
-  { title: "创作过程观察", summary: "关注作品如何从想法变为可见的东西。", status: "持续更新" },
-];
+const works = selectFeatured(await getPublishedWorks());
+const writing = selectFeatured(await getPublishedWriting());
+const experiments = selectFeatured(await getPublishedExperiments());
 ---
 
 <BaseLayout>
@@ -41,16 +30,7 @@ const experimentPlaceholders = [
       <h2 id="works-title">作品</h2>
       <p>正在形成的作品档案。</p>
     </div>
-    <div class="card-grid card-grid-three">
-      {workPlaceholders.map((item) => (
-        <article class="archive-card">
-          <p class="meta">{item.type}</p>
-          <h3>{item.title}</h3>
-          <p>{item.summary}</p>
-          <p class="status">{item.status}</p>
-        </article>
-      ))}
-    </div>
+    <div class="card-grid card-grid-three">{works.length ? works.map(({ id, data }) => <ContentCard headingLevel="h3" title={data.title} description={data.description} publishedAt={data.publishedAt} href={`/works/${id}/`} label={data.type} status={data.status} tags={data.tags} />) : <p class="empty">内容正在整理中。</p>}</div>
   </section>
 
   <section class="archive-section page-shell section-rule" aria-labelledby="thoughts-title">
@@ -59,15 +39,7 @@ const experimentPlaceholders = [
       <h2 id="thoughts-title">最近的思考</h2>
       <p>等待被认真写下的观察与判断。</p>
     </div>
-    <div class="thought-list">
-      {thoughtPlaceholders.map((item) => (
-        <article>
-          <p class="meta">{item.date} · 静态占位</p>
-          <h3>{item.title}</h3>
-          <p>{item.summary}</p>
-        </article>
-      ))}
-    </div>
+    <div class="card-grid card-grid-three">{writing.length ? writing.map(({ id, data }) => <ContentCard headingLevel="h3" title={data.title} description={data.description} publishedAt={data.publishedAt} href={`/writing/${id}/`} label={data.category} tags={data.tags} />) : <p class="empty">内容正在整理中。</p>}</div>
   </section>
 
   <section class="archive-section page-shell section-rule" aria-labelledby="experiments-title">
@@ -76,16 +48,7 @@ const experimentPlaceholders = [
       <h2 id="experiments-title">长期实验</h2>
       <p>在时间里反复实践、学习与记录。</p>
     </div>
-    <div class="card-grid card-grid-three">
-      {experimentPlaceholders.map((item) => (
-        <article class="archive-card">
-          <p class="meta">结构示例</p>
-          <h3>{item.title}</h3>
-          <p>{item.summary}</p>
-          <p class="status">{item.status}</p>
-        </article>
-      ))}
-    </div>
+    <div class="card-grid card-grid-three">{experiments.length ? experiments.map(({ id, data }) => <ContentCard headingLevel="h3" title={data.title} description={data.description} publishedAt={data.publishedAt} href={`/experiments/${id}/`} label={data.cadence} status={data.status} tags={data.tags} />) : <p class="empty">内容正在整理中。</p>}</div>
   </section>
 
   <section class="about page-shell section-rule" aria-labelledby="about-title">
@@ -176,6 +139,8 @@ const experimentPlaceholders = [
   .thought-list {
     grid-column: 2;
   }
+
+  .empty { grid-column: 1 / -1; padding: 3rem 1.5rem; border-block: 1px solid var(--color-border); color: var(--color-text-muted); text-align: center; }
 
   .card-grid {
     display: grid;

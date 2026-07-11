@@ -1,0 +1,21 @@
+---
+import { formatDate, toDateTime } from "../lib/content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+interface Props { title: string; description: string; publishedAt: Date; backHref: string; backLabel: string; canonical?: URL; }
+const { title, description, publishedAt, backHref, backLabel, canonical } = Astro.props;
+---
+<BaseLayout title={title} description={description} canonical={canonical}>
+  <article class="detail page-shell">
+    <p class="back"><a href={backHref}>← 返回{backLabel}</a></p>
+    <header><time datetime={toDateTime(publishedAt)}>{formatDate(publishedAt)}</time><h1>{title}</h1><p>{description}</p></header>
+    <div class="prose"><slot /></div>
+  </article>
+</BaseLayout>
+<style>
+  .detail { padding-block: clamp(4rem, 10vw, 8rem); }
+  .back, time { color: var(--color-text-muted); font-size: .82rem; }
+  header { max-width: var(--content-width); margin-block: 3rem 4rem; }
+  h1 { margin-block: 1rem; font-family: var(--font-serif); font-size: clamp(2.25rem, 5vw, 4.4rem); overflow-wrap: anywhere; }
+  header > p { color: var(--color-text-muted); font-size: 1.12rem; }
+  .prose { max-width: var(--content-width); padding-top: 2rem; border-top: 1px solid var(--color-border); font-family: var(--font-serif); font-size: 1.1rem; }
+</style>
