@@ -1,9 +1,0 @@
----
-import { getCollection, render, type CollectionEntry } from "astro:content";
-import ContentDetail from "../../components/ContentDetail.astro";
-import { canonicalFor } from "../../lib/content";
-export async function getStaticPaths() { const entries = await getCollection("writing", ({ data }) => !data.draft); return entries.map((entry) => ({ params: { slug: entry.id }, props: { entry } })); }
-const { entry } = Astro.props as { entry: CollectionEntry<"writing"> };
-const { Content } = await render(entry);
----
-<ContentDetail title={entry.data.title} description={entry.data.description} publishedAt={entry.data.publishedAt} backHref="/writing/" backLabel="思考" canonical={canonicalFor(`/writing/${entry.id}/`)}><Content /></ContentDetail>

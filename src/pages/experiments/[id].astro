@@ -1,0 +1,27 @@
+---
+import { render, type CollectionEntry } from "astro:content";
+import ContentDetail from "../../components/ContentDetail.astro";
+import { canonicalFor, formatDate, getPublishedExperiments } from "../../lib/content";
+
+export async function getStaticPaths() {
+  const entries = await getPublishedExperiments();
+  return entries.map((entry) => ({ params: { id: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props as { entry: CollectionEntry<"experiments"> };
+const { Content } = await render(entry);
+---
+
+<ContentDetail
+  title={entry.data.title}
+  description={entry.data.description}
+  publishedAt={entry.data.publishedAt}
+  updatedAt={entry.data.updatedAt}
+  backHref="/experiments/"
+  backLabel="长期实验"
+  canonical={canonicalFor(`/experiments/${entry.id}/`)}
+  meta={[entry.data.status, `开始于 ${formatDate(entry.data.startedAt)}`, ...(entry.data.cadence ? [entry.data.cadence] : [])]}
+  tags={entry.data.tags}
+>
+  <Content />
+</ContentDetail>
