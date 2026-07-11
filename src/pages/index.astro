@@ -4,9 +4,9 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import ContentCard from "../components/ContentCard.astro";
 import { getPublishedExperiments, getPublishedWorks, getPublishedWriting, selectFeatured } from "../lib/content";
 
-const works = selectFeatured(await getPublishedWorks());
-const writing = selectFeatured(await getPublishedWriting());
-const experiments = selectFeatured(await getPublishedExperiments());
+const works = selectFeatured(await getPublishedWorks(), 2);
+const writing = (await getPublishedWriting()).slice(0, 3);
+const experiments = (await getPublishedExperiments()).slice(0, 3);
 ---
 
 <BaseLayout>
@@ -27,8 +27,8 @@ const experiments = selectFeatured(await getPublishedExperiments());
   <section class="archive-section page-shell section-rule" aria-labelledby="works-title">
     <div class="section-heading">
       <p class="section-index" aria-hidden="true">01</p>
-      <h2 id="works-title">作品</h2>
-      <p>正在形成的作品档案。</p>
+      <h2 id="works-title">进行中的项目</h2>
+      <p>正在持续建设的长期项目。</p>
     </div>
     <div class="card-grid card-grid-three">{works.length ? works.map(({ id, data }) => <ContentCard headingLevel="h3" title={data.title} description={data.description} publishedAt={data.publishedAt} href={`/works/${id}/`} label={data.type} status={data.status} tags={data.tags} />) : <p class="empty">内容正在整理中。</p>}</div>
   </section>
@@ -36,8 +36,8 @@ const experiments = selectFeatured(await getPublishedExperiments());
   <section class="archive-section page-shell section-rule" aria-labelledby="thoughts-title">
     <div class="section-heading">
       <p class="section-index" aria-hidden="true">02</p>
-      <h2 id="thoughts-title">最近的思考</h2>
-      <p>等待被认真写下的观察与判断。</p>
+      <h2 id="thoughts-title">最新文章</h2>
+      <p>最近发布的正式写作。</p>
     </div>
     <div class="card-grid card-grid-three">{writing.length ? writing.map(({ id, data }) => <ContentCard headingLevel="h3" title={data.title} description={data.description} publishedAt={data.publishedAt} href={`/writing/${id}/`} label={data.category} tags={data.tags} />) : <p class="empty">内容正在整理中。</p>}</div>
   </section>
@@ -45,8 +45,8 @@ const experiments = selectFeatured(await getPublishedExperiments());
   <section class="archive-section page-shell section-rule" aria-labelledby="experiments-title">
     <div class="section-heading">
       <p class="section-index" aria-hidden="true">03</p>
-      <h2 id="experiments-title">长期实验</h2>
-      <p>在时间里反复实践、学习与记录。</p>
+      <h2 id="experiments-title">当前实验</h2>
+      <p>正在时间里反复实践、学习与记录。</p>
     </div>
     <div class="card-grid card-grid-three">{experiments.length ? experiments.map(({ id, data }) => <ContentCard headingLevel="h3" title={data.title} description={data.description} publishedAt={data.publishedAt} href={`/experiments/${id}/`} label={data.cadence} status={data.status} tags={data.tags} />) : <p class="empty">内容正在整理中。</p>}</div>
   </section>

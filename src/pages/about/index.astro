@@ -5,12 +5,20 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 ---
 <BaseLayout title="关于" description={site.defaultDescription} canonical={canonicalFor("/about/")}>
   <article class="about-page page-shell">
-    <p class="eyebrow">关于</p><h1>晓刀</h1><p>{site.about}</p>
+    <p class="eyebrow">关于</p>
+    <h1>晓刀</h1>
+    <div class="about-copy">
+      <p>{site.about}</p>
+      <p>我关心学习如何转化为理解，投资如何建立更清楚的判断，创作如何从想法走向作品，以及 AI 如何参与真实、长期的项目。</p>
+      <p>这里不急于展示一个完成的答案。我会持续记录正在建设的系统、写作与实验，保留过程中的选择、修正和积累。比起短暂地被看见，我更希望留下能够反复阅读、继续生长的内容。</p>
+    </div>
   </article>
 </BaseLayout>
 <style>
   .about-page { min-height: 60vh; padding-block: clamp(5rem, 12vw, 10rem); }
   .eyebrow { color: var(--color-text-muted); font-size: .78rem; letter-spacing: .12em; }
   h1 { margin-block: 1.5rem 2rem; font-family: var(--font-serif); font-size: clamp(2.6rem, 6vw, 5rem); }
-  .about-page > p:last-child { max-width: var(--content-width); font-family: var(--font-serif); font-size: clamp(1.3rem, 2.2vw, 1.8rem); line-height: 1.8; white-space: pre-line; }
+  .about-copy { max-width: var(--content-width); font-family: var(--font-serif); font-size: clamp(1.2rem, 2vw, 1.65rem); line-height: 1.9; }
+  .about-copy p:first-child { white-space: pre-line; }
+  .about-copy p { margin-bottom: 1.4em; }
 </style>
