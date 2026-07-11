@@ -1,6 +1,6 @@
 ---
 import { render, type CollectionEntry } from "astro:content";
-import ContentDetail from "../../components/ContentDetail.astro";
+import ContentLayout from "../../layouts/ContentLayout.astro";
 import { canonicalFor, getPublishedWriting } from "../../lib/content";
 
 export async function getStaticPaths() {
@@ -12,16 +12,17 @@ const { entry } = Astro.props as { entry: CollectionEntry<"writing"> };
 const { Content } = await render(entry);
 ---
 
-<ContentDetail
+<ContentLayout
   title={entry.data.title}
   description={entry.data.description}
-  publishedAt={entry.data.publishedAt}
-  updatedAt={entry.data.updatedAt}
+  publishedTime={entry.data.publishedAt}
+  modifiedTime={entry.data.updatedAt}
+  collectionLabel="思考记录"
   backHref="/writing/"
   backLabel="思考"
   canonical={canonicalFor(`/writing/${entry.id}/`)}
-  meta={[entry.data.category, ...(entry.data.series ? [entry.data.series] : [])]}
+  metadata={[{ label: "分类", value: entry.data.category }, ...(entry.data.series ? [{ label: "系列", value: entry.data.series }] : [])]}
   tags={entry.data.tags}
 >
   <Content />
-</ContentDetail>
+</ContentLayout>

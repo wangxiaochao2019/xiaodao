@@ -100,6 +100,47 @@ a:focus-visible {
   transform: translateY(0);
 }
 
+.prose {
+  max-width: var(--content-width);
+  padding-top: 2.5rem;
+  border-top: 1px solid var(--color-border);
+  font-family: var(--font-serif);
+  font-size: clamp(1.05rem, 1rem + .2vw, 1.15rem);
+  line-height: 1.9;
+  overflow-wrap: anywhere;
+}
+
+.prose :is(p, ul, ol, blockquote, pre, figure, table, dl) { margin-block: 0 1.5em; }
+.prose :is(h1, h2, h3, h4) { margin-block: 2.2em .75em; font-family: var(--font-serif); line-height: 1.4; }
+.prose h1 { font-size: 2rem; }
+.prose h2 { font-size: 1.65rem; }
+.prose h3 { font-size: 1.35rem; }
+.prose h4 { font-size: 1.15rem; }
+.prose :is(ul, ol) { padding-inline-start: 1.5em; }
+.prose li + li { margin-top: .35em; }
+.prose blockquote { padding: .75rem 1.25rem; border-left: .2rem solid var(--color-accent); background: color-mix(in srgb, var(--color-surface) 65%, transparent); color: var(--color-text-muted); }
+.prose blockquote > :last-child { margin-bottom: 0; }
+.prose a { font-weight: 600; }
+.prose strong { font-weight: 700; }
+.prose em { font-style: italic; }
+.prose code { padding: .12em .35em; border-radius: var(--radius-small); background: color-mix(in srgb, var(--color-border) 42%, transparent); font-family: ui-monospace, "SFMono-Regular", Consolas, monospace; font-size: .86em; }
+.prose pre { max-width: 100%; padding: 1rem 1.15rem; overflow-x: auto; border: 1px solid var(--color-border); background: var(--color-text); color: var(--color-surface); line-height: 1.65; overscroll-behavior-inline: contain; }
+.prose pre code { padding: 0; background: none; color: inherit; white-space: pre; overflow-wrap: normal; }
+.prose hr { margin-block: 3rem; border: 0; border-top: 1px solid var(--color-border); }
+.prose :is(img, video) { display: block; max-width: 100%; height: auto; }
+.prose figure { max-width: 100%; }
+.prose figcaption { margin-top: .65rem; color: var(--color-text-muted); font-family: var(--font-sans); font-size: .82rem; }
+.prose table { display: block; width: 100%; max-width: 100%; overflow-x: auto; border-collapse: collapse; font-family: var(--font-sans); font-size: .9rem; overscroll-behavior-inline: contain; }
+.prose :is(th, td) { min-width: 8rem; padding: .6rem .75rem; border: 1px solid var(--color-border); text-align: left; vertical-align: top; }
+.prose th { background: color-mix(in srgb, var(--color-surface) 72%, transparent); font-weight: 700; }
+.prose dt { font-weight: 700; }
+.prose dd { margin: 0 0 1rem 1.5rem; }
+
+@media (max-width: 30rem) {
+  .prose { font-size: 1rem; }
+  .prose :is(ul, ol) { padding-inline-start: 1.25em; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

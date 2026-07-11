@@ -25,7 +25,9 @@ export const site = {
   contact: "联系方式待补充",
   defaultDescription: "晓刀的作品、思考与长期实验。",
   defaultOgImage: null,
-  siteUrl: null,
+  // 部署前替换为最终确认的 workers.dev 地址。
+  siteUrl: "https://example.com",
+  locale: "zh_CN",
   rss: {
     title: "晓刀｜作品、思考与长期实验",
     description: "晓刀的作品、思考与长期实验。",

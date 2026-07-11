@@ -1,0 +1,70 @@
+---
+import { formatDate, toDateTime } from "../lib/content";
+import BaseLayout from "./BaseLayout.astro";
+
+interface MetadataItem {
+  label: string;
+  value: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  collectionLabel: string;
+  backHref: string;
+  backLabel: string;
+  canonical?: URL | string;
+  metadata?: MetadataItem[];
+  tags?: string[];
+  publishedTime?: Date;
+  modifiedTime?: Date;
+}
+
+const {
+  title,
+  description,
+  collectionLabel,
+  backHref,
+  backLabel,
+  canonical,
+  metadata = [],
+  tags = [],
+  publishedTime,
+  modifiedTime,
+} = Astro.props;
+const showModifiedTime = publishedTime && modifiedTime && modifiedTime.getTime() > publishedTime.getTime();
+---
+
+<BaseLayout title={title} description={description} canonical={canonical} type="article" publishedTime={publishedTime} modifiedTime={showModifiedTime ? modifiedTime : undefined}>
+  <article class="content-detail page-shell">
+    <p class="content-back"><a href={backHref}>← 返回{backLabel}</a></p>
+    <header class="content-header">
+      <p class="content-kicker">{collectionLabel}</p>
+      <h1>{title}</h1>
+      <p class="content-description">{description}</p>
+      {(publishedTime || showModifiedTime || metadata.length > 0) && (
+        <dl class="content-metadata">
+          {publishedTime && <><dt>发布</dt><dd><time datetime={toDateTime(publishedTime)}>{formatDate(publishedTime)}</time></dd></>}
+          {showModifiedTime && <><dt>更新</dt><dd><time datetime={toDateTime(modifiedTime)}>{formatDate(modifiedTime)}</time></dd></>}
+          {metadata.map(({ label, value }) => <><dt>{label}</dt><dd>{value}</dd></>)}
+        </dl>
+      )}
+      {tags.length > 0 && <ul class="content-tags" aria-label="标签">{tags.map((tag) => <li>#{tag}</li>)}</ul>}
+    </header>
+    <div class="prose"><slot /></div>
+  </article>
+</BaseLayout>
+
+<style>
+  .content-detail { padding-block: clamp(4rem, 10vw, 8rem); }
+  .content-back, .content-kicker { color: var(--color-text-muted); font-size: .82rem; }
+  .content-header { max-width: var(--content-width); margin-block: 3rem 4rem; }
+  .content-kicker { margin-bottom: 1rem; letter-spacing: .1em; }
+  h1 { margin-block: 0 1.25rem; font-family: var(--font-serif); font-size: clamp(2.25rem, 5vw, 4.4rem); overflow-wrap: anywhere; }
+  .content-description { color: var(--color-text-muted); font-size: 1.12rem; }
+  .content-metadata { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: .35rem 1rem; margin-block: 1.75rem 0; font-size: .84rem; }
+  .content-metadata dt { color: var(--color-text-muted); }
+  .content-metadata dd { margin: 0; overflow-wrap: anywhere; }
+  .content-tags { display: flex; flex-wrap: wrap; gap: .35rem 1rem; margin: 1.25rem 0 0; padding: 0; color: var(--color-text-muted); font-size: .82rem; list-style: none; }
+  @media (max-width: 30rem) { .content-metadata { grid-template-columns: 1fr; gap: .1rem; } .content-metadata dd + dt { margin-top: .65rem; } }
+</style>
