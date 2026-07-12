@@ -22,6 +22,16 @@ const recentUpdates = [
     <p class="signature">{site.heroSignature}</p>
   </section>
 
+  <section class="operating-system page-shell section-rule" aria-labelledby="operating-system-title">
+    <p class="section-index" aria-hidden="true">CORE</p>
+    <div class="operating-system-entry">
+      <p class="operating-system-label">我的操作系统</p>
+      <h2 id="operating-system-title"><a href="/writing/xiaodao-longterm-principles/">晓刀长期主义原则100条</a></h2>
+      <p>关于行动、判断、投资、学习、身体、育儿、关系与自由的一套持续更新的个人原则。</p>
+      <a class="operating-system-link" href="/writing/xiaodao-longterm-principles/">阅读核心原则 →</a>
+    </div>
+  </section>
+
   <section class="introduction page-shell section-rule" aria-labelledby="intro-title">
     <p class="section-index" aria-hidden="true">00</p>
     <div class="section-heading">
@@ -131,6 +141,48 @@ const recentUpdates = [
 
   .introduction .section-index {
     grid-row: 1 / 3;
+  }
+
+  .operating-system .section-index {
+    align-self: start;
+  }
+
+  .operating-system-entry {
+    max-width: var(--content-width);
+  }
+
+  .operating-system-label {
+    margin-bottom: 1rem;
+    color: var(--color-accent);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+  }
+
+  .operating-system-entry h2 {
+    margin-bottom: 1rem;
+    font-family: var(--font-serif);
+    font-size: clamp(1.8rem, 2.8vw, 2.7rem);
+  }
+
+  .operating-system-entry h2 a {
+    color: inherit;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+  }
+
+  .operating-system-entry > p:not(.operating-system-label) {
+    color: var(--color-text-muted);
+    font-family: var(--font-serif);
+    font-size: 1.08rem;
+    line-height: 1.75;
+  }
+
+  .operating-system-link {
+    display: inline-block;
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 600;
   }
 
   .lead,
@@ -250,6 +302,7 @@ const recentUpdates = [
 
     .archive-section .section-heading,
     .about .section-heading,
+    .operating-system-entry,
     .card-grid,
     .thought-list,
     .about > p {
